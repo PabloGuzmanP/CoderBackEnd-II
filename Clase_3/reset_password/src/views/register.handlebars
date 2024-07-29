@@ -1,0 +1,37 @@
+<header>
+    <h1>Registrarse</h1>
+</header>
+
+<main>
+    <section>
+        <h3>Registrate</h3>
+        <form action="/api/sessions/register" method="post" style="display: flex; flex-direction: column; gap: 0.5rem">
+            <div>
+                <label for="name">Nombre</label>
+                <input type="text" name="name" id="name">
+            </div>
+            <div>
+                <label for="surname">Apellido</label>
+                <input type="text" name="surname" id="surname">
+            </div>
+            <div>
+                <label for="age">Edad</label>
+                <input type="text" name="age" id="age">
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="text" name="email" id="email">
+            </div>
+            <div>
+                <label for="password">Contraseña</label>
+                <input type="password" name="password" id="password">
+            </div>
+
+            <div style="margin-top: 1rem;">
+                <a href="/"><input type="button" value="Volver al Inicio"></a>
+                {{!-- <a href="/"><input type="button" value="Guardar Perfil"></a> --}}
+                <input type="submit" value="Guardar Perfil">
+            </div>
+        </form>
+    </section>
+</main>
