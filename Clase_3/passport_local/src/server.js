@@ -1,13 +1,17 @@
 import express from "express";
-import usersRouter from "./routes/api.users.route.js";
-import sessionRouter from "./routes/api.sessions.route.js";
-import mongoDB from "./config/mongoose.config.js";
-import handlebarsConfig from "./config/handlebars.config.js";
-import homeRouter from "./routes/home.route.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import passport from "passport";
+
+import { config as dotenvConfig } from "dotenv";
+import mongoDB from "./config/mongoose.config.js";
+import handlebarsConfig from "./config/handlebars.config.js";
 import { configPassport } from "./config/passport.config.js";
+
+import usersRouter from "./routes/api.users.route.js";
+import sessionRouter from "./routes/api.sessions.route.js";
+import homeRouter from "./routes/home.route.js";
+import paths from "./utils/path.js";
 
 const server = express();
 const PORT = 8080;
@@ -16,15 +20,17 @@ const HOST = "localhost";
 server.use(express.urlencoded({extended: true}));
 server.use(express.json());
 
+dotenvConfig({ path: paths.env })
+
 const storeOptions = MongoStore.create({
-    mongoUrl: "mongodb+srv://juanpagu2101:Quemiralampara@clusterbackend.urvvi7i.mongodb.net/hash-password",
+    mongoUrl: process.env.MONGO_URL,
     autoRemove: "native",
 });
 
 // Configuración de Sessions
 const sessionOptions = {
     store: storeOptions,
-    secret: "secretCoder",
+    secret: process.env.SECRET_KEY,
     cookie: {maxAge: 2 * 60 * 60 * 1000}, // Esto equivale a dos horas
     resave: false, 
     saveUninitialized: false

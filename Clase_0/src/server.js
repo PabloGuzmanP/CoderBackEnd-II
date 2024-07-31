@@ -1,6 +1,9 @@
 import express from "express";
-import usersRouter from "./routes/users.route.js"
+import usersRouter from "./routes/users.route.js";
+
+import { config as dotenvConfig } from "dotenv";
 import mongoDB from "./config/mongoose.config.js";
+import paths from "./utils/paths.js";
 
 const server = express();
 const PORT = 8080;
@@ -8,6 +11,8 @@ const HOST = "localhost";
 
 server.use(express.urlencoded({extended: true}));
 server.use(express.json());
+
+dotenvConfig({ path: paths.env });
 
 server.use("/api/users", usersRouter);
 
