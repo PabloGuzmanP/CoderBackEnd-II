@@ -2,6 +2,8 @@ import express from "express";
 import loginRouter from "./routes/login.route.js"
 import handlebarsConfig from "./config/handlebars.config.js";
 import cookieParser from "cookie-parser";
+import { config as dotenvConfig } from "dotenv";
+import paths from "./utils/path.js";
 
 const server = express();
 const PORT = 8080;
@@ -10,7 +12,10 @@ const HOST = "localhost";
 // Decodificadores del BODY
 server.use(express.urlencoded({ extended: true }));
 server.use(express.json());
-server.use(cookieParser("claveSecreta")) // Nunca debe de quedar expuesto
+
+dotenvConfig({ path: paths.env });
+
+server.use(cookieParser(process.env.SECRET_KEY)) // Nunca debe de quedar expuesto
 
 handlebarsConfig.config(server);
 

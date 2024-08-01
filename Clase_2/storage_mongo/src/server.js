@@ -3,6 +3,7 @@ import loginRouter from "./routes/login.route.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import paths from "./utils/path.js";
+import { config as dotenvConfig } from "dotenv";
 
 const server = express();
 const PORT = 8080;
@@ -12,8 +13,10 @@ const HOST = "localhost";
 server.use(express.urlencoded({ extended: true }));
 server.use(express.json());
 
+dotenvConfig({ path: paths.env });
+
 const storeOptions = MongoStore.create({
-    mongoUrl: "mongodb+srv://juanpagu2101:Quemiralampara@clusterbackend.urvvi7i.mongodb.net/class-two",
+    mongoUrl: process.env.MONGO_URL,
     autoRemove: "native",
 });
 
@@ -21,7 +24,7 @@ const storeOptions = MongoStore.create({
 const sessionOptions = {
     store: storeOptions,
     // El secret es una clave secreta
-    secret: "secretCoder",
+    secret: process.env.SECRET_KEY,
     cookie: {maxAge: 60*1000},
     resave: false, 
     saveUninitialized: true

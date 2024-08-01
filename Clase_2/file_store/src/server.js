@@ -3,6 +3,7 @@ import loginRouter from "./routes/login.route.js";
 import session from "express-session";
 import sessionFileStore from "session-file-store";
 import paths from "./utils/path.js";
+import { config as dotenvConfig } from "dotenv";
 
 const server = express();
 const PORT = 8080;
@@ -11,6 +12,8 @@ const HOST = "localhost";
 // Decodificadores del BODY
 server.use(express.urlencoded({ extended: true }));
 server.use(express.json());
+
+dotenvConfig({ path: paths.env });
 
 const storeOptions = {
     path: paths.sessions,
@@ -23,7 +26,7 @@ const FileStore = sessionFileStore(session);
 const sessionOptions = {
     store: new FileStore(storeOptions),
     // El secret es una clave secreta
-    secret: "secretCoder",
+    secret: process.env.SECRET_KEY,
     cookie: {maxAge: 60*1000},
     resave: false, 
     saveUninitialized: true

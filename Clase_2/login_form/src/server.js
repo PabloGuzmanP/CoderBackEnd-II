@@ -1,11 +1,16 @@
 import express from "express";
-import usersRouter from "./routes/api.users.route.js";
-import sessionRouter from "./routes/api.sessions.route.js";
-import mongoDB from "./config/mongoose.config.js";
-import handlebarsConfig from "./config/handlebars.config.js";
-import homeRouter from "./routes/home.route.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+
+import usersRouter from "./routes/api.users.route.js";
+import sessionRouter from "./routes/api.sessions.route.js";
+import homeRouter from "./routes/home.route.js";
+
+import mongoDB from "./config/mongoose.config.js";
+import handlebarsConfig from "./config/handlebars.config.js";
+import { config as dotenvConfig } from "dotenv";
+import paths from "./utils/path.js";
+
 
 const server = express();
 const PORT = 8080;
@@ -14,10 +19,12 @@ const HOST = "localhost";
 server.use(express.urlencoded({extended: true}));
 server.use(express.json());
 
+dotenvConfig({ path: paths.env });
+
 handlebarsConfig.config(server);
 
 const storeOptions = MongoStore.create({
-    mongoUrl: "mongodb+srv://juanpagu2101:Quemiralampara@clusterbackend.urvvi7i.mongodb.net/mi-sistema",
+    mongoUrl: process.env.MONGO_URL,
     autoRemove: "native",
 });
 
@@ -25,7 +32,7 @@ const storeOptions = MongoStore.create({
 const sessionOptions = {
     store: storeOptions,
     // El secret es una clave secreta
-    secret: "secretCoder",
+    secret: process.env.SECRET_KEY,
     cookie: {maxAge: 60*1000},
     resave: false, 
     saveUninitialized: true

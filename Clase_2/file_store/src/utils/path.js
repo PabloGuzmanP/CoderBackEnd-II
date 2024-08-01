@@ -6,6 +6,7 @@ const __dirname = Path.dirname(__filename);
 
 const paths = {
     root: Path.dirname(""),
+    src: Path.join(Path.dirname(""), ".env"),
     src: Path.join(Path.dirname(""), "src"),
     sessions: Path.join(Path.dirname(""), "src", "sessions"),
 };
