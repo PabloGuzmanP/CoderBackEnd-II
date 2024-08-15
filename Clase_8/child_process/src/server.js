@@ -21,8 +21,6 @@ server.use("*", (req, res) => {
 });
 
 server.listen(process.env.PORT, () => {
-    console.log(process.env.PORT);
-    
     console.log(`Ejecutándose en http://localhost:${process.env.PORT}`);
     mongoDB.connectDB();
 });

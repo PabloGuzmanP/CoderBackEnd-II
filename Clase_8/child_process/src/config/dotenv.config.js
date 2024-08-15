@@ -10,7 +10,6 @@ export const config = () => {
     
     dotenv.config({
         path: (options.env === "PROD" ? paths.env.prod : paths.env.dev),
-        db: paths.env.db
     });
 }
 
